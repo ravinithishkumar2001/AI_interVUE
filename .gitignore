@@ -1,3 +1,33 @@
-node_modules
+# Dependencies
+node_modules/
+
+# Environment and secrets
 .env
-dist
+.env.*
+!.env.example
+
+# Build and coverage output
+dist/
+build/
+coverage/
+.vite/
+
+# Logs and local runtime files
+*.log
+logs/
+*.pid
+*.pid.lock
+
+# IDE and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Local npm files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
