@@ -99,10 +99,10 @@ function extractJson(text) { const clean = text.replace(/^```(?:json)?\s*/i, '')
 
 export async function askCrocs(prompt, fallback) {
   if (!process.env.GRQ_API_KEY || providerDisabledReason) return fallback;
-  const url = `${process.env.CROCS_BASE_URL || 'https://api.x.ai/v1'}/chat/completions`;
+  const url = `${process.env.CROCS_BASE_URL || 'https://api.groq.com/openai/v1'}/chat/completions`;
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      const response = await fetch(url, { method: 'POST', headers: { Authorization: `Bearer ${process.env.GRQ_API_KEY}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ model: process.env.CROCS_MODEL || 'grok-3-mini', temperature: 0.4, messages: [{ role: 'system', content: 'You are an expert technical interviewer. Return only valid JSON, with no markdown fences.' }, { role: 'user', content: prompt }] }) });
+      const response = await fetch(url, { method: 'POST', headers: { Authorization: `Bearer ${process.env.GRQ_API_KEY}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ model: process.env.CROCS_MODEL || 'openai/gpt-oss-120b', temperature: 0.4, messages: [{ role: 'system', content: 'You are an expert technical interviewer. Return only valid JSON, with no markdown fences.' }, { role: 'user', content: prompt }] }) });
       const rawBody = await response.text();
       if (!response.ok) {
         if ((response.status === 400 || response.status === 401) && /incorrect api key|invalid.*key/i.test(rawBody)) {
